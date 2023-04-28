@@ -1,0 +1,16 @@
+{
+  "name": "esm-repl",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+    "esm-repl": "index.js"
+  },
+  "scripts": {},
+  "keywords": ["repl", "esm", "es6", "module"],
+  "author": "Yutaro Yoshii",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.21.4"
+  }
+}
