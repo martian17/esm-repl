@@ -115,7 +115,7 @@ let bgRepl = repl.start({
     }),
     useGlobal: true,
     writer: (output)=>{
-        bgRepl.emit("error",output);
+        bgRepl.emit("writer_output",output);
         return output;
     }
 });
@@ -137,9 +137,10 @@ bgRepl.execFile = async function(_filename,header=""){
     }
     code += `throw new Error("success_${ctx.uuid}");`;
     //console.log(`@@@\n${code}\n@@@`);
+    const r_promise = new Promise(res=>bgRepl.once("writer_output",res));
     bgRepl.eval(code,global,`REPL_${ctx.uuid}`,()=>{});
     while(true){
-        const r = await new Promise(res=>bgRepl.once("error",res));
+        const r = await r_promise;
         if(!(r instanceof Error))continue;
         if(r.message !== `success_${ctx.uuid}`){
             r.stack = r.stack || "";
